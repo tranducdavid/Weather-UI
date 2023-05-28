@@ -1,15 +1,23 @@
 import { ReactNode } from 'react'
 import { FiSun } from 'react-icons/fi'
+import { useForecast } from './queries'
+import { Loading } from './Loading'
+import { getCurrentTemperature } from './utils'
 
 type DayCardProps = {
   children: ReactNode
 }
+
 const DayCard = ({ children }: DayCardProps) => {
   return <div className="rounded-xl border border-gray-200 bg-white shadow">{children}</div>
 }
 
 const App = () => {
-  return (
+  const { data, isLoading, isError } = useForecast()
+
+  return !data || isLoading || isError ? (
+    <Loading />
+  ) : (
     <div className="flex h-full w-full items-center justify-center bg-red-50">
       <div className="h-[52rem] w-[48rem] rounded-3xl border border-gray-200 bg-stone-50 shadow">
         <div className="h-[20rem] w-full rounded-t-3xl bg-[url('/weather.jpg')] bg-cover bg-center"></div>
@@ -22,7 +30,7 @@ const App = () => {
               <p className="mb-4">
                 <i>Sunny</i>
               </p>
-              <p className="text-3xl font-bold">32°C</p>
+              <p className="text-3xl font-bold">{getCurrentTemperature(data)}°C</p>
             </div>
             <div className="rounded-xl border border-gray-200 bg-white shadow">02</div>
             <div className="rounded-xl border border-gray-200 bg-white shadow">03</div>
