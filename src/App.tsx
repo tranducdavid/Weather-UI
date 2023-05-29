@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { FiSun } from 'react-icons/fi'
-import { useForecast } from './queries'
+import { useForecast, usePosition } from './queries'
 import { Loading } from './Loading'
 import { getCurrentTemperature } from './utils'
 
@@ -13,7 +13,8 @@ const DayCard = ({ children }: DayCardProps) => {
 }
 
 const App = () => {
-  const { data, isLoading, isError } = useForecast()
+  const { data: position } = usePosition()
+  const { data, isLoading, isError } = useForecast(position?.latitude, position?.longitude)
 
   return !data || isLoading || isError ? (
     <Loading />

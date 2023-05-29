@@ -1,14 +1,24 @@
 import { useQuery } from 'react-query'
 import { Forecast } from './types'
+import { getCurrentPosition } from './utils'
 
-const fetchForecast = async () => {
+const fetchForecast = async (latitude: number, longitude: number) => {
   const response = await fetch(
-    'https://api.open-meteo.com/v1/forecast?latitude=48.29&longitude=17.52&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&timezone=UTC'
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&timezone=UTC`
   )
   const data = (await response.json()) as Forecast
   return data
 }
 
-export const useForecast = () => {
-  return useQuery('forecast', fetchForecast, { staleTime: 60 * 60 * 1000, cacheTime: 60 * 60 * 1000, refetchInterval: 60 * 60 * 1000 })
+export const useForecast = (latitude?: number, longitude?: number) => {
+  return useQuery('forecast', () => fetchForecast(latitude!, longitude!), {
+    enabled: !!latitude && !!longitude,
+    staleTime: 60 * 60 * 1000,
+    cacheTime: 60 * 60 * 1000,
+    refetchInterval: 60 * 60 * 1000,
+  })
+}
+
+export const usePosition = () => {
+  return useQuery('position', getCurrentPosition, { staleTime: Infinity, cacheTime: Infinity })
 }
