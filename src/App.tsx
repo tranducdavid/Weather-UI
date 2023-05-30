@@ -1,15 +1,25 @@
-import { ReactNode } from 'react'
 import { FiSun } from 'react-icons/fi'
 import { useForecast, usePosition } from './queries'
 import { Loading } from './Loading'
 import { getCurrentTemperature } from './utils'
+import _ from 'lodash'
+import moment, { Moment } from 'moment'
 
 type DayCardProps = {
-  children: ReactNode
+  day: Moment
+  temperatureMin: number
+  temperatureMax: number
 }
 
-const DayCard = ({ children }: DayCardProps) => {
-  return <div className="rounded-xl border border-gray-200 bg-white shadow">{children}</div>
+const DayCard = ({ day, temperatureMin, temperatureMax }: DayCardProps) => {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
+      <div>{day.format('ddd')}</div>
+      <div>
+        {Math.round(temperatureMax)}° <span className="text-gray-600">{Math.round(temperatureMin)}°</span>
+      </div>
+    </div>
+  )
 }
 
 const App = () => {
@@ -39,13 +49,12 @@ const App = () => {
             <div className="rounded-xl border border-gray-200 bg-white shadow">05</div>
           </div>
           <div className="grid h-[10rem] grid-flow-col grid-cols-7 grid-rows-1 gap-4">
-            <DayCard>01</DayCard>
-            <DayCard>02</DayCard>
-            <DayCard>03</DayCard>
-            <DayCard>04</DayCard>
-            <DayCard>05</DayCard>
-            <DayCard>06</DayCard>
-            <DayCard>07</DayCard>
+            {_.range(7).map((i) => {
+              const day = moment().add(i, 'day')
+              const temperatureMin = data.daily.temperature_2m_min[i]
+              const temperatureMax = data.daily.temperature_2m_max[i]
+              return <DayCard key={`${i}${temperatureMin}${temperatureMax}`} {...{ day, temperatureMin, temperatureMax }} />
+            })}
           </div>
         </div>
       </div>
