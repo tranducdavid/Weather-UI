@@ -45,6 +45,7 @@ export interface Hourly {
   apparent_temperature: number[]
   windspeed_10m: number[]
   weathercode: number[]
+  precipitation_probability: number[]
 }
 
 export interface HourlyUnits {
@@ -54,4 +55,5 @@ export interface HourlyUnits {
   apparent_temperature: string
   windspeed_10m: string
   weathercode: string
+  precipitation_probability: string
 }

@@ -11,6 +11,7 @@ import { WeatherCard } from './components/WeatherCard'
 import { WeatherIconWithDescription } from './components/WeatherIcon'
 import { Forecast } from './types'
 import { Humidity } from './components/Humidity'
+import { PrecipitationProbability } from './components/PrecipitationProbability'
 
 type WeatherForecastProps = {
   forecast: Forecast
@@ -18,7 +19,7 @@ type WeatherForecastProps = {
 }
 
 const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
-  const { currentTemperature, humidity, weathercode } = getCurrentHourlyData(forecast)
+  const { currentTemperature, precipitationProbability, humidity, weathercode } = getCurrentHourlyData(forecast)
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-red-50">
@@ -32,7 +33,9 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
               <WeatherIconWithDescription weathercode={weathercode} iconSize={48} compact={false} />
               <p className="mt-4 text-3xl font-bold">{currentTemperature}°C</p>
             </WeatherCard>
-            <WeatherCard>02</WeatherCard>
+            <WeatherCard>
+              <PrecipitationProbability precipitationProbability={precipitationProbability} />
+            </WeatherCard>
             <WeatherCard>
               <Sunrise sunrise={moment(forecast.daily.sunrise[0]).format('H:mm')} sunset={moment(forecast.daily.sunset[0]).format('H:mm')} />
             </WeatherCard>
