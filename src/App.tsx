@@ -4,6 +4,7 @@ import { Loading } from './Loading'
 import { getCurrentTemperature } from './utils'
 import _ from 'lodash'
 import moment, { Moment } from 'moment'
+import { Sunrise } from './Sunrise'
 
 type DayCardProps = {
   day: Moment
@@ -63,7 +64,9 @@ const App = () => {
               <p className="text-3xl font-bold">{getCurrentTemperature(data)}°C</p>
             </div>
             <div className="rounded-xl border border-gray-200 bg-white shadow">02</div>
-            <div className="rounded-xl border border-gray-200 bg-white shadow">03</div>
+            <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
+              <Sunrise sunrise={moment(data.daily.sunrise[0]).format('H:mm')} sunset={moment(data.daily.sunset[0]).format('H:mm')} />
+            </div>
             <div className="rounded-xl border border-gray-200 bg-white shadow">04</div>
             <div className="rounded-xl border border-gray-200 bg-white shadow">05</div>
           </div>
