@@ -1,47 +1,13 @@
 import { FiSun } from 'react-icons/fi'
-import { useForecast, useLatLonToCity, usePosition } from './queries'
-import { Loading } from './Loading'
+import { useForecast, usePosition } from './queries'
+import { Loading } from './components/Loading'
 import { getCurrentTemperature } from './utils'
 import _ from 'lodash'
-import moment, { Moment } from 'moment'
-import { Sunrise } from './Sunrise'
-import { WindStatus } from './WindStatus'
-
-type DayCardProps = {
-  day: Moment
-  temperatureMin: number
-  temperatureMax: number
-}
-
-const DayCard = ({ day, temperatureMin, temperatureMax }: DayCardProps) => {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
-      <div>{day.format('ddd')}</div>
-      <div>
-        {Math.round(temperatureMax)}° <span className="text-gray-600">{Math.round(temperatureMin)}°</span>
-      </div>
-    </div>
-  )
-}
-
-type LocationProps = {
-  latitude?: number
-  longitude?: number
-}
-
-const Location = ({ latitude, longitude }: LocationProps) => {
-  const { data } = useLatLonToCity(latitude, longitude)
-
-  if (!latitude && !longitude) {
-    return <></>
-  }
-
-  if (data) {
-    return <p className="mb-4 text-gray-600">{data}</p>
-  }
-
-  return <></>
-}
+import moment from 'moment'
+import { Sunrise } from './components/Sunrise'
+import { WindStatus } from './components/WindStatus'
+import { DayCard } from './components/DayCard'
+import { Location } from './components/Location'
 
 const App = () => {
   const { data: position } = usePosition()
