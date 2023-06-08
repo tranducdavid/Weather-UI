@@ -5,6 +5,7 @@ import { getCurrentTemperature } from './utils'
 import _ from 'lodash'
 import moment, { Moment } from 'moment'
 import { Sunrise } from './Sunrise'
+import { WindStatus } from './WindStatus'
 
 type DayCardProps = {
   day: Moment
@@ -67,7 +68,9 @@ const App = () => {
             <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
               <Sunrise sunrise={moment(data.daily.sunrise[0]).format('H:mm')} sunset={moment(data.daily.sunset[0]).format('H:mm')} />
             </div>
-            <div className="rounded-xl border border-gray-200 bg-white shadow">04</div>
+            <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
+              <WindStatus windSpeed={data.hourly.windspeed_10m[0]} />
+            </div>
             <div className="rounded-xl border border-gray-200 bg-white shadow">05</div>
           </div>
           <div className="grid h-[10rem] grid-flow-col grid-cols-7 grid-rows-1 gap-4">
