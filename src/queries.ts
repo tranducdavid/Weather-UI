@@ -22,3 +22,17 @@ export const useForecast = (latitude?: number, longitude?: number) => {
 export const usePosition = () => {
   return useQuery('position', getCurrentPosition, { staleTime: Infinity, cacheTime: Infinity })
 }
+
+const fetchLatLonToCity = async (latitude?: number, longitude?: number): Promise<string> => {
+  const response = await fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`)
+  const data = await response.json()
+  return data.address.city
+}
+
+export const useLatLonToCity = (latitude?: number, longitude?: number) => {
+  return useQuery('city', () => fetchLatLonToCity(latitude!, longitude!), {
+    enabled: !!latitude && !!longitude,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  })
+}

@@ -1,5 +1,5 @@
 import { FiSun } from 'react-icons/fi'
-import { useForecast, usePosition } from './queries'
+import { useForecast, useLatLonToCity, usePosition } from './queries'
 import { Loading } from './Loading'
 import { getCurrentTemperature } from './utils'
 import _ from 'lodash'
@@ -22,6 +22,25 @@ const DayCard = ({ day, temperatureMin, temperatureMax }: DayCardProps) => {
   )
 }
 
+type LocationProps = {
+  latitude?: number
+  longitude?: number
+}
+
+const Location = ({ latitude, longitude }: LocationProps) => {
+  const { data } = useLatLonToCity(latitude, longitude)
+
+  if (!latitude && !longitude) {
+    return <></>
+  }
+
+  if (data) {
+    return <p className="mb-4 text-gray-600">{data}</p>
+  }
+
+  return <></>
+}
+
 const App = () => {
   const { data: position } = usePosition()
   const { data, isLoading, isError } = useForecast(position?.latitude, position?.longitude)
@@ -36,7 +55,7 @@ const App = () => {
           <div className="mb-4 grid h-[20rem] grid-flow-col grid-cols-3 grid-rows-2 gap-4">
             <div className="row-span-2 flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
               <p className="text-lg">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-              <p className="mb-4 text-gray-600">Bratislava</p>
+              <Location latitude={position?.latitude} longitude={position?.longitude} />
               <FiSun size={32} />
               <p className="mb-4">
                 <i>Sunny</i>
