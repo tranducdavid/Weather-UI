@@ -8,6 +8,7 @@ import { Sunrise } from './components/Sunrise'
 import { WindStatus } from './components/WindStatus'
 import { DayCard } from './components/DayCard'
 import { Location } from './components/Location'
+import { WeatherCard } from './components/WeatherCard'
 
 const App = () => {
   const { data: position } = usePosition()
@@ -21,7 +22,7 @@ const App = () => {
         <div className="h-[20rem] w-full rounded-t-3xl bg-[url('/weather.jpg')] bg-cover bg-center"></div>
         <div className="m-8 -mt-4">
           <div className="mb-4 grid h-[20rem] grid-flow-col grid-cols-3 grid-rows-2 gap-4">
-            <div className="row-span-2 flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
+            <WeatherCard rowsSpan={2}>
               <p className="text-lg">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               <Location latitude={position?.latitude} longitude={position?.longitude} />
               <FiSun size={32} />
@@ -29,15 +30,15 @@ const App = () => {
                 <i>Sunny</i>
               </p>
               <p className="text-3xl font-bold">{getCurrentTemperature(data)}°C</p>
-            </div>
-            <div className="rounded-xl border border-gray-200 bg-white shadow">02</div>
-            <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
+            </WeatherCard>
+            <WeatherCard>02</WeatherCard>
+            <WeatherCard>
               <Sunrise sunrise={moment(data.daily.sunrise[0]).format('H:mm')} sunset={moment(data.daily.sunset[0]).format('H:mm')} />
-            </div>
-            <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white shadow">
+            </WeatherCard>
+            <WeatherCard>
               <WindStatus windSpeed={data.hourly.windspeed_10m[0]} />
-            </div>
-            <div className="rounded-xl border border-gray-200 bg-white shadow">05</div>
+            </WeatherCard>
+            <WeatherCard>05</WeatherCard>
           </div>
           <div className="grid h-[10rem] grid-flow-col grid-cols-7 grid-rows-1 gap-4">
             {_.range(7).map((i) => {
