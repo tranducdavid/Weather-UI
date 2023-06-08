@@ -20,6 +20,7 @@ export interface Forecast {
 
 export interface Daily {
   time: string[]
+  weathercode: number[]
   temperature_2m_max: number[]
   temperature_2m_min: number[]
   sunrise: string[]
@@ -29,6 +30,7 @@ export interface Daily {
 
 export interface DailyUnits {
   time: string
+  weathercode: string
   temperature_2m_max: string
   temperature_2m_min: string
   sunrise: string
@@ -42,6 +44,7 @@ export interface Hourly {
   relativehumidity_2m: number[]
   apparent_temperature: number[]
   windspeed_10m: number[]
+  weathercode: number[]
 }
 
 export interface HourlyUnits {
@@ -50,4 +53,5 @@ export interface HourlyUnits {
   relativehumidity_2m: string
   apparent_temperature: string
   windspeed_10m: string
+  weathercode: string
 }
