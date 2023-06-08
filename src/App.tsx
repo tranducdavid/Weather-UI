@@ -37,7 +37,7 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
               <PrecipitationProbability precipitationProbability={precipitationProbability} />
             </WeatherCard>
             <WeatherCard>
-              <Sunrise sunrise={moment(forecast.daily.sunrise[0]).format('H:mm')} sunset={moment(forecast.daily.sunset[0]).format('H:mm')} />
+              <Sunrise sunrise={moment.utc(forecast.daily.sunrise[0]).local().format('H:mm')} sunset={moment.utc(forecast.daily.sunset[0]).local().format('H:mm')} />
             </WeatherCard>
             <WeatherCard>
               <WindStatus windSpeed={windSpeed} />
