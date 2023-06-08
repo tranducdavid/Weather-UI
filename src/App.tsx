@@ -28,8 +28,8 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
             <WeatherCard rowsSpan={2}>
               <p className="text-lg">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               <Location latitude={position?.latitude} longitude={position?.longitude} />
-              <WeatherIconWithDescription weathercode={weathercode} iconSize={48} />
-              <p className="text-3xl font-bold">{currentTemperature}°C</p>
+              <WeatherIconWithDescription weathercode={weathercode} iconSize={48} compact={false} />
+              <p className="mt-4 text-3xl font-bold">{currentTemperature}°C</p>
             </WeatherCard>
             <WeatherCard>02</WeatherCard>
             <WeatherCard>
@@ -40,12 +40,14 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
             </WeatherCard>
             <WeatherCard>05</WeatherCard>
           </div>
-          <div className="grid h-[10rem] grid-flow-col grid-cols-7 grid-rows-1 gap-4">
+          <div className="grid h-[8rem] grid-flow-col grid-cols-7 grid-rows-1 gap-4">
             {_.range(7).map((i) => {
               const day = moment().add(i, 'day')
               const temperatureMin = forecast.daily.temperature_2m_min[i]
               const temperatureMax = forecast.daily.temperature_2m_max[i]
-              return <DayCard key={`${i}${temperatureMin}${temperatureMax}`} {...{ day, temperatureMin, temperatureMax }} />
+              const weathercode = forecast.daily.weathercode[i]
+              const key = `${i}${temperatureMin}${temperatureMax}${weathercode}`
+              return <DayCard {...{ key, day, temperatureMin, temperatureMax, weathercode }} />
             })}
           </div>
         </div>

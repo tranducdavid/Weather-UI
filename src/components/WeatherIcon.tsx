@@ -47,16 +47,26 @@ const codeToIcon: Record<number, { Icon: IconType; description: string }> = {
 type WeatherIconWithDescriptionProps = {
   weathercode: number
   iconSize: number
+  compact: boolean
 }
 
-export const WeatherIconWithDescription = ({ weathercode, iconSize }: WeatherIconWithDescriptionProps) => {
+export const WeatherIconWithDescription = ({ weathercode, iconSize, compact }: WeatherIconWithDescriptionProps) => {
   const { Icon, description } = codeToIcon[weathercode]
   return (
     <div className="flex flex-col items-center">
-      <Icon size={iconSize} />
-      <p className="mb-4 text-gray-500">
-        <i>{description}</i>
-      </p>
+      <div className="group">
+        <Icon size={iconSize} />
+        {compact && (
+          <span className="absolute w-auto min-w-max origin-left scale-0 rounded-md bg-gray-900 p-2 text-xs font-bold text-white shadow-md transition-all duration-100 group-hover:scale-100">
+            {description}
+          </span>
+        )}
+      </div>
+      {!compact && (
+        <p className="text-gray-500">
+          <i>{description}</i>
+        </p>
+      )}
     </div>
   )
 }
