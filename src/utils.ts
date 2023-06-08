@@ -9,9 +9,10 @@ export const getCurrentHourlyData = (data: Forecast) => {
   const currentTimeIndex = data.hourly.time.findIndex((time: string) => time === isoHour)
 
   const currentTemperature = data.hourly.temperature_2m[currentTimeIndex]
+  const humidity = data.hourly.relativehumidity_2m[currentTimeIndex]
   const weathercode = data.hourly.weathercode[currentTimeIndex]
 
-  return { currentTemperature, weathercode }
+  return { currentTemperature, humidity, weathercode }
 }
 
 export type Position = {

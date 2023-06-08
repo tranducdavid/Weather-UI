@@ -10,6 +10,7 @@ import { Location } from './components/Location'
 import { WeatherCard } from './components/WeatherCard'
 import { WeatherIconWithDescription } from './components/WeatherIcon'
 import { Forecast } from './types'
+import { Humidity } from './components/Humidity'
 
 type WeatherForecastProps = {
   forecast: Forecast
@@ -17,7 +18,7 @@ type WeatherForecastProps = {
 }
 
 const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
-  const { currentTemperature, weathercode } = getCurrentHourlyData(forecast)
+  const { currentTemperature, humidity, weathercode } = getCurrentHourlyData(forecast)
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-red-50">
@@ -38,7 +39,9 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
             <WeatherCard>
               <WindStatus windSpeed={forecast.hourly.windspeed_10m[0]} />
             </WeatherCard>
-            <WeatherCard>05</WeatherCard>
+            <WeatherCard>
+              <Humidity humidity={humidity} />
+            </WeatherCard>
           </div>
           <div className="grid h-[8rem] grid-flow-col grid-cols-7 grid-rows-1 gap-4">
             {_.range(7).map((i) => {
