@@ -10,10 +10,11 @@ export const getCurrentHourlyData = (data: Forecast) => {
 
   const currentTemperature = data.hourly.temperature_2m[currentTimeIndex]
   const precipitationProbability = data.hourly.precipitation_probability[currentTimeIndex]
+  const windSpeed = data.hourly.windspeed_10m[currentTimeIndex]
   const humidity = data.hourly.relativehumidity_2m[currentTimeIndex]
   const weathercode = data.hourly.weathercode[currentTimeIndex]
 
-  return { currentTemperature, precipitationProbability, humidity, weathercode }
+  return { currentTemperature, precipitationProbability, windSpeed, humidity, weathercode }
 }
 
 export type Position = {

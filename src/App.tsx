@@ -19,7 +19,7 @@ type WeatherForecastProps = {
 }
 
 const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
-  const { currentTemperature, precipitationProbability, humidity, weathercode } = getCurrentHourlyData(forecast)
+  const { currentTemperature, precipitationProbability, windSpeed, humidity, weathercode } = getCurrentHourlyData(forecast)
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-red-50">
@@ -40,7 +40,7 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
               <Sunrise sunrise={moment(forecast.daily.sunrise[0]).format('H:mm')} sunset={moment(forecast.daily.sunset[0]).format('H:mm')} />
             </WeatherCard>
             <WeatherCard>
-              <WindStatus windSpeed={forecast.hourly.windspeed_10m[0]} />
+              <WindStatus windSpeed={windSpeed} />
             </WeatherCard>
             <WeatherCard>
               <Humidity humidity={humidity} />
