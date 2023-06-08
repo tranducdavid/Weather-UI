@@ -13,7 +13,7 @@ export const Location = ({ latitude, longitude }: LocationProps) => {
   }
 
   if (data) {
-    return <p className="mb-4 text-gray-600">{data}</p>
+    return <p className="text-gray-600">{data}</p>
   }
 
   return <></>

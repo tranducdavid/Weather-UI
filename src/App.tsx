@@ -30,6 +30,7 @@ const WeatherForecast = ({ forecast, position }: WeatherForecastProps) => {
             <WeatherCard rowsSpan={2}>
               <p className="text-lg">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               <Location latitude={position?.latitude} longitude={position?.longitude} />
+              <div className="h-4" />
               <WeatherIconWithDescription weathercode={weathercode} iconSize={48} compact={false} />
               <p className="mt-4 text-3xl font-bold">{currentTemperature}°C</p>
             </WeatherCard>
